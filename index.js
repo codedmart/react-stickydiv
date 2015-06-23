@@ -37,6 +37,7 @@ var StickyDiv = React.createClass({
     },
     getDefaultProps: function getDefaultProps() {
         return {
+            inlineStyle: true,
             offsetTop: 0,
             className: "",
             zIndex: 9999
@@ -79,18 +80,18 @@ var StickyDiv = React.createClass({
         var divStyle;
 
         if (this.state.fix) {
-            divStyle = {
+            this.props.inlineStyle ? divStyle = {
                 display: "block",
                 position: "fixed",
                 width: this.state.width ? this.state.width + "px" : null,
                 top: this.props.offsetTop
-            };
+            } : {};
             return React.createElement(
                 "div",
-                { style: { zIndex: this.props.zIndex, position: "relative", width: "100%" } },
+                { style: { position: "relative", width: "100%" } },
                 React.createElement(
                     "div",
-                    { ref: "duplicate", key: "duplicate", style: { visibility: "hidden" } },
+                    { ref: "duplicate", key: "duplicate", style: { display: "none" } },
                     this.props.children
                 ),
                 React.createElement(
@@ -100,13 +101,13 @@ var StickyDiv = React.createClass({
                 )
             );
         } else {
-            divStyle = {
+            this.props.inlineStyle ? divStyle = {
                 display: "block",
                 position: "relative"
-            };
+            } : {};
             return React.createElement(
                 "div",
-                { style: { zIndex: this.props.zIndex, position: "relative", width: "100%" } },
+                { style: { position: "relative", width: "100%" } },
                 React.createElement(
                     "div",
                     { ref: "original", key: "original", style: divStyle },
